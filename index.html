@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>독일어 레벨 테스트</title>
+    <style>
+        :root { --primary: #003366; --bg: #f4f7f6; }
+        body { font-family: 'Apple SD Gothic Neo', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        #quiz-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 90%; max-width: 450px; text-align: center; }
+        .question { display: none; }
+        .question.active { display: block; }
+        h2 { color: var(--primary); font-size: 1.2rem; margin-bottom: 25px; line-height: 1.6; }
+        .options-grid { display: grid; gap: 12px; }
+        button { padding: 15px; border: 2px solid #ddd; border-radius: 10px; background: white; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        button:hover { border-color: var(--primary); background: #f0f4f8; }
+        .result-page { display: none; }
+        .result-page.active { display: block; }
+        .level-badge { font-size: 2.2rem; font-weight: bold; color: var(--primary); margin: 20px 0; }
+        .desc { color: #555; line-height: 1.6; margin-bottom: 25px; }
+        .cta-button { display: block; padding: 18px; background: var(--primary); color: white; text-decoration: none; border-radius: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <div id="q1" class="question active">
+        <h2>Q1. "나는 일본에서 왔어"를<br>독일어로 바르게 말한 것은?</h2>
+        <div class="options-grid">
+            <button onclick="next(1, 10)">Ich komme aus Japan.</button>
+            <button onclick="next(1, 0)">Ich kommt aus Japan.</button>
+            <button onclick="next(1, 0)">Ich kommen aus Japan.</button>
+        </div>
+    </div>
+
+    <div id="q2" class="question">
+        <h2>Q2. "나는 지난 주말에 여행을 다녀왔어"<br>빈칸에 알맞은 것은?<br>Wir ____ 한 시간 동안 버스를 탔다.</h2>
+        <div class="options-grid">
+            <button onclick="next(2, 0)">haben gefahren</button>
+            <button onclick="next(2, 15)">sind gefahren</button>
+            <button onclick="next(2, 0)">sind fahren</button>
+        </div>
+    </div>
+
+    <div id="q3" class="question">
+        <h2>Q3. "16살 때부터 지금까지 줄곧"<br>어울리는 접속사는?</h2>
+        <div class="options-grid">
+            <button onclick="next(3, 20)">Seitdem</button>
+            <button onclick="next(3, 0)">Nachdem</button>
+            <button onclick="next(3, 0)">Bevor</button>
+        </div>
+    </div>
+
+    <div id="result" class="result-page">
+        <h2>테스트 완료! 당신의 레벨은?</h2>
+        <div id="level-text" class="level-badge"></div>
+        <p id="desc" class="desc"></p>
+        <a id="store-link" href="https://smartstore.naver.com/본인스토어" class="cta-button">나에게 맞는 수업 보러가기</a>
+    </div>
+</div>
+
+<script>
+    let score = 0;
+    function next(qNum, points) {
+        score += points;
+        document.getElementById('q' + qNum).classList.remove('active');
+        const nextQ = document.getElementById('q' + (qNum + 1));
+        if (nextQ) {
+            nextQ.classList.add('active');
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('result').classList.add('active');
+        const levelText = document.getElementById('level-text');
+        const desc = document.getElementById('desc');
+        
+        if (score <= 10) {
+            levelText.innerText = "A1 (입문)";
+            desc.innerText = "독일어와 막 친해지는 단계군요! 왕초보반을 추천합니다.";
+        } else if (score <= 25) {
+            levelText.innerText = "A2 (기초)";
+            desc.innerText = "기초가 탄탄하시네요! 회화 마스터반을 추천합니다.";
+        } else {
+            levelText.innerText = "B1 (중급)";
+            desc.innerText = "훌륭한 실력입니다! 시험 대비반을 추천합니다.";
+        }
+    }
+</script>
+
+</body>
+</html>
